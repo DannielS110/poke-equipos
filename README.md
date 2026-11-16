@@ -30,7 +30,7 @@ src/app/
 
 ## Despliegue
 
- abre [http://localhost:4200](https://poke-equipos.vercel.app/)
+ abre https://poke-equipos.vercel.app/
 
 
 
