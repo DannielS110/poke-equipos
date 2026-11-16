@@ -1,0 +1,19 @@
+<aside class="tarjeta panel">
+  <div class="panel-cabecera">
+    <h3>Habilidad</h3>
+    <button class="btn cerrar" (click)="cerrar.emit()" aria-label="Cerrar">✕</button>
+  </div>
+
+  @if (cargando()) {
+    <p class="cargando">Consultando /ability/{{ nombre() }}…</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+    <button class="btn" (click)="cargar(nombre())">Reintentar</button>
+  } @else if (habilidad(); as h) {
+    <h4 class="capital">
+      {{ h.nombreEs }} <span class="suave">({{ h.nombre }})</span>
+    </h4>
+    <p>{{ h.efecto }}</p>
+    <p class="suave">La tienen {{ h.totalPokemon }} Pokémon.</p>
+  }
+</aside>

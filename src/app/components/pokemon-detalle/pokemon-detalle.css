@@ -1,0 +1,75 @@
+.cabecera {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cabecera img,
+.sin-imagen {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  background: var(--fondo-suave);
+  border-radius: 50%;
+}
+
+.sin-imagen {
+  display: grid;
+  place-items: center;
+  color: var(--suave);
+}
+
+h2 {
+  margin: 0;
+  text-transform: capitalize;
+  font-size: 2rem;
+}
+
+.numero,
+.categoria,
+.medidas {
+  margin: 0.2rem 0;
+  color: var(--suave);
+}
+
+.insignia {
+  background: #f5c518;
+  color: #222;
+  border-radius: 6px;
+  padding: 0 0.4rem;
+  font-size: 0.8rem;
+  margin-left: 0.3rem;
+}
+
+section h3 small {
+  font-weight: normal;
+  color: var(--suave);
+  font-size: 0.85rem;
+}
+
+.habilidad {
+  background: var(--fondo-suave);
+  color: var(--texto);
+  text-transform: capitalize;
+}
+
+.stat {
+  display: grid;
+  grid-template-columns: 90px 40px 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.3rem 0;
+}
+
+.barra {
+  height: 10px;
+  background: var(--fondo-suave);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.barra div {
+  height: 100%;
+  background: var(--acento);
+}

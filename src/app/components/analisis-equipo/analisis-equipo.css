@@ -1,0 +1,53 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th,
+td {
+  padding: 0.3rem 0.4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--borde);
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+}
+
+tr.peligro {
+  background: rgba(230, 40, 41, 0.18);
+}
+
+tr.alerta {
+  background: rgba(224, 176, 0, 0.14);
+}
+
+.aviso,
+.bien {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+}
+
+.aviso {
+  background: rgba(230, 40, 41, 0.15);
+}
+
+.bien {
+  background: rgba(63, 161, 41, 0.15);
+}
+
+.promedios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+}
+
+.promedios div {
+  display: flex;
+  justify-content: space-between;
+  background: var(--fondo-suave);
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+}

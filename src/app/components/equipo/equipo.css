@@ -1,0 +1,61 @@
+.ranuras {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.6rem;
+}
+
+.ranura {
+  position: relative;
+  background: var(--fondo-suave);
+  border-radius: 12px;
+  padding: 0.4rem;
+  text-align: center;
+  min-height: 120px;
+}
+
+.ranura.vacia {
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  color: var(--borde);
+  border: 2px dashed var(--borde);
+  background: transparent;
+}
+
+.ver {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--texto);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.quitar {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border: none;
+  background: var(--error);
+  color: #fff;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  font-size: 0.7rem;
+}
+
+.mini-tipos {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.mini-tipos span {
+  width: 24px;
+  height: 6px;
+  border-radius: 3px;
+}

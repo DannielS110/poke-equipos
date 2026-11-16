@@ -1,0 +1,83 @@
+@let p = pokemon();
+<article class="tarjeta detalle">
+  <div class="cabecera">
+    @if (p.imagen) {
+      <img [src]="p.imagen" [alt]="p.nombre" width="200" height="200" />
+    } @else {
+      <div class="sin-imagen">Sin imagen</div>
+    }
+    <div>
+      <p class="numero">#{{ p.id.toString().padStart(4, '0') }}</p>
+      <h2>{{ p.nombre }}</h2>
+      @if (especie(); as e) {
+        <p class="categoria">
+          {{ e.categoria }}
+          @if (e.legendario) {
+            <span class="insignia">Legendario</span>
+          }
+          @if (e.mitico) {
+            <span class="insignia">Mítico</span>
+          }
+        </p>
+      }
+      <div class="chips">
+        @for (t of p.tipos; track t) {
+          <button
+            class="chip"
+            [style.background]="colorTipo(t)"
+            (click)="verTipo.emit(t)"
+            title="Ver ventajas y debilidades"
+          >
+            {{ tipoEs(t) }}
+          </button>
+        }
+      </div>
+      <p class="medidas">{{ p.altura }} m · {{ p.peso }} kg</p>
+      <button
+        class="btn primario"
+        (click)="agregar.emit()"
+        [disabled]="enEquipo() || equipoLleno()"
+      >
+        {{ enEquipo() ? '✓ En tu equipo' : equipoLleno() ? 'Equipo lleno' : '+ Agregar al equipo' }}
+      </button>
+    </div>
+  </div>
+
+  <section>
+    <h3>Descripción</h3>
+    @if (especie(); as e) {
+      <p>{{ e.descripcion }}</p>
+    } @else if (errorEspecie()) {
+      <p class="error">{{ errorEspecie() }}</p>
+    } @else {
+      <p class="cargando">Cargando descripción…</p>
+    }
+  </section>
+
+  <section>
+    <h3>Habilidades <small>(toca una para ver qué hace)</small></h3>
+    <div class="chips">
+      @for (h of p.habilidades; track h.nombre) {
+        <button class="chip habilidad" (click)="verHabilidad.emit(h.nombre)">
+          {{ h.nombre }}
+          @if (h.oculta) {
+            <em>(oculta)</em>
+          }
+        </button>
+      }
+    </div>
+  </section>
+
+  <section>
+    <h3>
+      Estadísticas base <small>Total: {{ total() }}</small>
+    </h3>
+    @for (s of p.estadisticas; track s.nombre) {
+      <div class="stat">
+        <span>{{ nombresStats[s.nombre] ?? s.nombre }}</span>
+        <strong>{{ s.valor }}</strong>
+        <div class="barra"><div [style.width.%]="porcentaje(s.valor)"></div></div>
+      </div>
+    }
+  </section>
+</article>

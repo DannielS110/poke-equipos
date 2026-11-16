@@ -1,0 +1,76 @@
+<header class="encabezado">
+  <div>
+    <h1>PokéEquipos</h1>
+    <p>Arma tu equipo de 6 Pokémon y descubre contra qué tipos es débil.</p>
+  </div>
+</header>
+
+<main class="contenido">
+  <div class="columna">
+    <app-buscador [cargando]="cargando()" (buscar)="buscar($event)" />
+
+    @if (mensaje()) {
+      <p class="toast" role="status">{{ mensaje() }}</p>
+    }
+
+    @if (cargando()) {
+      <div class="tarjeta cargando-grande">
+        <div class="pokeball"></div>
+        Buscando Pokémon…
+      </div>
+    } @else if (error()) {
+      <div class="tarjeta error-grande" role="alert">
+        <strong>😕 {{ error() }}</strong>
+        <p>Prueba con otro nombre (en inglés, ej. <em>charizard</em>) o un número del 1 al 1025.</p>
+      </div>
+    } @else if (pokemon(); as p) {
+      @if (tipoAbierto(); as t) {
+        <app-tipo-detalle
+          [nombre]="t"
+          (cerrar)="tipoAbierto.set(null)"
+          (cambiarTipo)="abrirTipo($event)"
+        />
+      }
+      @if (habilidadAbierta(); as h) {
+        <app-habilidad-detalle [nombre]="h" (cerrar)="habilidadAbierta.set(null)" />
+      }
+      <app-pokemon-detalle
+        [pokemon]="p"
+        [especie]="especie()"
+        [errorEspecie]="errorEspecie()"
+        [enEquipo]="enEquipo()"
+        [equipoLleno]="equipo.lleno()"
+        (verTipo)="abrirTipo($event)"
+        (verHabilidad)="abrirHabilidad($event)"
+        (agregar)="agregarAlEquipo()"
+      />
+    } @else {
+      @if (tipoAbierto(); as t) {
+        <app-tipo-detalle
+          [nombre]="t"
+          (cerrar)="tipoAbierto.set(null)"
+          (cambiarTipo)="abrirTipo($event)"
+        />
+      }
+      <div class="tarjeta bienvenida">
+        <h2>¡Empieza buscando un Pokémon!</h2>
+        <p>Escribe un nombre o pulsa 🎲 para uno al azar. Luego agrégalo a tu equipo.</p>
+        <div class="chips">
+          @for (n of ['pikachu', 'charizard', 'gengar', 'lucario', 'garchomp']; track n) {
+            <button class="chip sugerido" (click)="buscar(n)">{{ n }}</button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="columna lateral">
+    <app-equipo (seleccionar)="buscar($event)" />
+    <app-analisis-equipo (verTipo)="abrirTipo($event)" />
+  </div>
+</main>
+
+<footer class="pie">
+  Datos de <a href="https://pokeapi.co" target="_blank" rel="noopener">PokéAPI</a> · Práctica 02 –
+  Programación y Plataformas Web · UPS
+</footer>

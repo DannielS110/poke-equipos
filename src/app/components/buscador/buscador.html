@@ -1,0 +1,21 @@
+<form class="buscador" (submit)="enviar($event)">
+  <input
+    type="search"
+    list="lista-pokemon"
+    placeholder="Nombre o número (ej. pikachu, 25)"
+    aria-label="Buscar Pokémon"
+    [value]="texto()"
+    (input)="texto.set($any($event.target).value)"
+  />
+  <datalist id="lista-pokemon">
+    @for (nombre of sugerencias(); track nombre) {
+      <option [value]="nombre"></option>
+    }
+  </datalist>
+  <button type="submit" class="btn primario" [disabled]="cargando() || !texto().trim()">
+    {{ cargando() ? 'Buscando…' : 'Buscar' }}
+  </button>
+  <button type="button" class="btn" (click)="aleatorio()" [disabled]="cargando()">
+    🎲 Aleatorio
+  </button>
+</form>

@@ -1,0 +1,32 @@
+<aside class="tarjeta panel">
+  <div class="panel-cabecera">
+    <h3>
+      Tipo <span class="chip" [style.background]="colorTipo(nombre())">{{ tipoEs(nombre()) }}</span>
+    </h3>
+    <button class="btn cerrar" (click)="cerrar.emit()" aria-label="Cerrar">✕</button>
+  </div>
+
+  @if (cargando()) {
+    <p class="cargando">Consultando /type/{{ nombre() }}…</p>
+  } @else if (error()) {
+    <p class="error">{{ error() }}</p>
+    <button class="btn" (click)="cargar(nombre())">Reintentar</button>
+  } @else if (tipo()) {
+    <div class="relaciones">
+      @for (s of secciones(); track s.titulo) {
+        <div>
+          <h4>{{ s.titulo }}</h4>
+          <div class="chips">
+            @for (x of s.tipos; track x) {
+              <button class="chip" [style.background]="colorTipo(x)" (click)="cambiarTipo.emit(x)">
+                {{ tipoEs(x) }}
+              </button>
+            } @empty {
+              <span class="suave">Ninguno</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</aside>

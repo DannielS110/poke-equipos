@@ -1,0 +1,61 @@
+<section class="tarjeta">
+  <h3>Análisis del equipo</h3>
+
+  @if (!equipo.miembros().length) {
+    <p class="suave">Agrega Pokémon para ver contra qué tipos es débil tu equipo.</p>
+  } @else if (equipo.errorAnalisis()) {
+    <p class="error">{{ equipo.errorAnalisis() }}</p>
+  } @else if (!equipo.analisis().length) {
+    <p class="cargando">Consultando tipos del equipo…</p>
+  } @else {
+    @if (peligros().length) {
+      <p class="aviso">
+        ⚠️ Tu equipo es muy vulnerable a:
+        @for (f of peligros(); track f.tipo) {
+          <strong>{{ tipoEs(f.tipo) }}{{ $last ? '' : ', ' }}</strong>
+        }
+      </p>
+    } @else {
+      <p class="bien">✅ Ningún tipo amenaza a 3 o más miembros a la vez.</p>
+    }
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo atacante</th>
+          <th title="Miembros que reciben daño x2 o x4">Débiles</th>
+          <th title="Miembros que reciben daño x½ o x¼">Resisten</th>
+          <th>Inmunes</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (f of equipo.analisis(); track f.tipo) {
+          <tr [class]="f.nivel">
+            <td>
+              <button
+                class="chip"
+                [style.background]="colorTipo(f.tipo)"
+                (click)="verTipo.emit(f.tipo)"
+              >
+                {{ tipoEs(f.tipo) }}
+              </button>
+            </td>
+            <td>{{ f.debiles || '–' }}</td>
+            <td>{{ f.resistentes || '–' }}</td>
+            <td>{{ f.inmunes || '–' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <h4>Promedio de estadísticas</h4>
+    <div class="promedios">
+      @for (s of equipo.promedios(); track s.nombre) {
+        <div>
+          <span class="suave">{{ nombresStats[s.nombre] ?? s.nombre }}</span>
+          <strong>{{ s.valor }}</strong>
+        </div>
+      }
+    </div>
+  }
+</section>

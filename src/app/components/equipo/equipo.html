@@ -1,0 +1,40 @@
+<section class="tarjeta">
+  <div class="panel-cabecera">
+    <h3>Mi equipo ({{ equipo.miembros().length }}/{{ max }})</h3>
+    @if (equipo.miembros().length) {
+      <button class="btn" (click)="equipo.vaciar()">Vaciar</button>
+    }
+  </div>
+
+  <div class="ranuras">
+    @for (p of equipo.miembros(); track p.id) {
+      <div class="ranura">
+        <button
+          class="quitar"
+          (click)="equipo.quitar(p.id)"
+          [attr.aria-label]="'Quitar ' + p.nombre"
+        >
+          ✕
+        </button>
+        <button class="ver" (click)="seleccionar.emit(p.nombre)" title="Ver detalle">
+          @if (p.imagen) {
+            <img [src]="p.imagen" [alt]="p.nombre" width="72" height="72" />
+          }
+          <span class="capital">{{ p.nombre }}</span>
+        </button>
+        <div class="mini-tipos">
+          @for (t of p.tipos; track t) {
+            <span [style.background]="colorTipo(t)" [title]="tipoEs(t)"></span>
+          }
+        </div>
+      </div>
+    }
+    @for (v of espaciosVacios; track $index) {
+      <div class="ranura vacia">?</div>
+    }
+  </div>
+
+  @if (!equipo.miembros().length) {
+    <p class="suave">Busca un Pokémon y pulsa “Agregar al equipo”. Puedes tener hasta {{ max }}.</p>
+  }
+</section>
